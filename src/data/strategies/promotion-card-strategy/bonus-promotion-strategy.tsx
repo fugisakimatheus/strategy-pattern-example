@@ -25,10 +25,8 @@ export class BonusPromotionStrategy implements PromotionCardStrategy {
         </div>
 
         <div className="flex flex-col font-semibold">
-          <span className="text-slate-700 text-lg">
-            {this.promotion.product.name}
-          </span>
-          <span className="text-green-600 text-lg">
+          <span className="text-lg">{this.promotion.product.name}</span>
+          <span className="text-lg price-positive">
             {formatToCurrency(this.promotion.product.price)}
           </span>
         </div>
@@ -37,7 +35,7 @@ export class BonusPromotionStrategy implements PromotionCardStrategy {
   }
 
   renderIcon(): React.ReactNode {
-    return <FaGift className="text-3xl text-indigo-500" />;
+    return <FaGift className="text-3xl" />;
   }
 
   renderDetails(): React.ReactNode {
@@ -46,7 +44,7 @@ export class BonusPromotionStrategy implements PromotionCardStrategy {
         {this.promotion.rule.bonusProducts.map((product) => (
           <div
             key={product.id}
-            className="flex flex-col gap-2 bg-slate-100/80 rounded-md p-3"
+            className="strategy-inset-item flex flex-col gap-2"
           >
             <div className="flex flex-row items-center justify-center relative">
               <div className="text-white bg-green-600 flex flex-row items-center justify-center absolute top-0 right-0 rounded-[4px]">
@@ -60,10 +58,8 @@ export class BonusPromotionStrategy implements PromotionCardStrategy {
             </div>
 
             <div className="flex flex-col font-semibold text-sm">
-              <span className="text-slate-700">{product.name}</span>
-              <span className="text-green-600 line-through">
-                {formatToCurrency(product.price)}
-              </span>
+              <span>{product.name}</span>
+              <span className="price-strike">{formatToCurrency(product.price)}</span>
             </div>
           </div>
         ))}

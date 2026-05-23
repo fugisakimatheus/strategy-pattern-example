@@ -2,6 +2,7 @@ import {
   PercentagePromotionRuleModel,
   PromotionModel,
 } from "@/data/models/promotion-model";
+import { roundMoney } from "@/utils/cart.utils";
 import { formatToCurrency } from "@/utils/number.utils";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { PromotionCardStrategy } from "./strategy";
@@ -20,16 +21,14 @@ export class PercentagePromotionStrategy implements PromotionCardStrategy {
         <div className="flex flex-row items-center justify-center">
           <img
             src={this.promotion.product.imageUrl}
-            className="w-[120px] h-[120px]"
+            className="h-[120px] w-[120px] object-contain"
             alt={this.promotion.product.name}
           />
         </div>
 
         <div className="flex flex-col font-semibold">
-          <span className="text-slate-700 text-lg">
-            {this.promotion.product.name}
-          </span>
-          <span className="text-green-600 text-lg">
+          <span className="text-lg">{this.promotion.product.name}</span>
+          <span className="text-lg price-positive">
             {formatToCurrency(this.promotion.product.price)}
           </span>
         </div>
@@ -38,26 +37,38 @@ export class PercentagePromotionStrategy implements PromotionCardStrategy {
   }
 
   renderIcon(): React.ReactNode {
-    return <RiDiscountPercentFill className="text-3xl text-green-600" />;
+    return <RiDiscountPercentFill className="text-3xl" />;
   }
 
   renderDetails(): React.ReactNode {
-    const discountValue =
-      this.promotion.product.price * this.promotion.rule.discountPercent;
-
-    const newPrice = this.promotion.product.price - discountValue;
+    const { discountPercent, minQuantity } = this.promotion.rule;
+    const unitPrice = this.promotion.product.price;
+    const discountedUnitPrice = roundMoney(
+      unitPrice * (1 - discountPercent)
+    );
 
     return (
-      <div className="flex flex-col w-full justify-start h-[66px]">
+      <div className="flex w-full flex-col gap-2">
+        <p className="text-xs muted">
+          Preço por unidade com desconto (mín. {minQuantity} un. no pedido):
+        </p>
         <div className="flex flex-row items-center justify-between gap-4">
-          <span className="text-green-600 font-semibold line-through">
-            {formatToCurrency(this.promotion.product.price)}
+          <span className="price-strike font-semibold">
+            {formatToCurrency(unitPrice)}
           </span>
-          <span className="text-green-600 font-semibold">
-            {formatToCurrency(newPrice)}
+          <span className="price-positive font-semibold">
+            {formatToCurrency(discountedUnitPrice)}
           </span>
         </div>
-        <Progress value={50} className="w-full" />
+        <div className="flex items-center justify-between text-xs muted">
+          <span>Desconto aplicado</span>
+          <span>{Math.round(discountPercent * 100)}%</span>
+        </div>
+        <Progress
+          value={discountPercent * 100}
+          className="w-full"
+          aria-label={`Desconto de ${Math.round(discountPercent * 100)}%`}
+        />
       </div>
     );
   }

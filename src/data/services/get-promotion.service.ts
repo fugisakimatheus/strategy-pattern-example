@@ -16,8 +16,7 @@ export const getPromotion = (promotionType: PromotionType) => {
       id: 1,
       name: "Coca cola lata 355ml",
       price: 4.99,
-      imageUrl:
-        "https://www.imagensempng.com.br/wp-content/uploads/2022/01/2442.png",
+      imageUrl: "/products/coca-cola-350ML.png",
     },
     rule: {
       minQuantity: 1,
@@ -27,27 +26,24 @@ export const getPromotion = (promotionType: PromotionType) => {
           id: 2,
           name: "Fanta laranja 2L",
           price: 8.69,
-          imageUrl:
-            "https://media.soujusto.com.br/products/Refrigerante_Fanta_Laranja_1500Ml.jpg",
+          imageUrl: "/products/fanta-laranja-2l.png",
         },
         {
           id: 3,
           name: "Schweppes 1,5L",
           price: 9.47,
-          imageUrl:
-            "https://rafasupervarejao.com.br/28255/7894900321753-refrigerante-citrus-schweppes-15l.jpg",
+          imageUrl: "/products/schweppes-1.5L.png",
         },
         {
           id: 4,
           name: "Del Valle uva 1L",
-          price: 12.73,
-          imageUrl:
-            "https://media.soujusto.com.br/products/DEL_VALLE_N%C3%A9ctar_Uva_Sem_A%C3%A7%C3%BAcar_TP_1_Litro.png",
+          price: 8.5,
+          imageUrl: "/products/del-valle-1l-uva.png",
         },
       ],
     },
-    endDate: "2024-08-20T23:59",
-    createdAt: "2024-07-24T10:56",
+    endDate: "2026-08-20T23:59",
+    createdAt: "2026-05-01T10:00",
   };
 
   const percentagePromotion: PromotionModel<PercentagePromotionRuleModel> = {
@@ -60,15 +56,14 @@ export const getPromotion = (promotionType: PromotionType) => {
       id: 1,
       name: "Coca cola lata 355ml",
       price: 4.99,
-      imageUrl:
-        "https://www.imagensempng.com.br/wp-content/uploads/2022/01/2442.png",
+      imageUrl: "/products/coca-cola-350ML.png",
     },
     rule: {
       discountPercent: 0.25,
       minQuantity: 2,
     },
-    endDate: "2024-08-20T23:59",
-    createdAt: "2024-07-24T10:56",
+    endDate: "2026-09-15T23:59",
+    createdAt: "2026-05-01T10:00",
   };
 
   return promotionType === "bonus" ? bonusPromotion : percentagePromotion;
